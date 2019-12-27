@@ -1,0 +1,13 @@
+2019-12-27 10:21:52.089   MAIN   INF   Program version 2019.4.3.15 started
+2019-12-27 10:21:52.089   MAIN   WRN   Config file does not exist, creating
+2019-12-27 10:21:52.089   MAIN   INF   Directory for config file created
+2019-12-27 10:21:52.089   MAIN   INF   Writing data to JSON file
+2019-12-27 10:21:52.089   MAIN   INF   Data written to config file
+2019-12-27 10:21:52.090   MAIN   INF   Program running
+2019-12-27 10:21:52.092   MAIN   WRN   Database zapsi2 does not exist
+2019-12-27 10:21:52.092   MAIN   INF   Creating directory data
+2019-12-27 10:21:52.107   MAIN   ERR   Problem creating directory /home/data, already exists: exit status 1
+2019-12-27 10:21:52.108   MAIN   INF   Directory /home/data created
+2019-12-27 10:21:52.108   MAIN   INF   Mapping network directory
+2019-12-27 10:21:52.121   MAIN   ERR   Problem mapping network directory: exit status 66
+2019-12-27 10:21:52.122   MAIN   INF   Sleeping for 9.967988121s
