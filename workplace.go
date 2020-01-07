@@ -245,7 +245,9 @@ func (workplace Workplace) ProcessMachineFails(start time.Time) {
 		}
 	}
 	latestMachineFailDateTime = workplace.GetLatestMachineFailDateTime()
-	if start.Sub(latestMachineFailDateTime) > time.Minute*60 && len(openOrders) > 0 {
+	waitTime := workplace.GetConstantFromDatabase()
+	LogInfo(workplace.Name, "Duration is over the limit: "+strconv.FormatBool(start.Sub(latestMachineFailDateTime) > time.Duration(waitTime))+" with constant in milliseconds: "+strconv.Itoa(waitTime))
+	if start.Sub(latestMachineFailDateTime) > time.Duration(waitTime) && len(openOrders) > 0 {
 		LogInfo(workplace.Name, "Number of machine fails: "+strconv.Itoa(machineFailsCount))
 		for _, openOrder := range openOrders {
 			if machineFailsCount > 0 {

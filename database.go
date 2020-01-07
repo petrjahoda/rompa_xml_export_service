@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"strconv"
 	"time"
 )
 
@@ -27,6 +28,27 @@ type Workplace struct {
 
 func (Workplace) TableName() string {
 	return "workplace"
+}
+
+func (workplace Workplace) GetConstantFromDatabase() int {
+	numberOfMillisecondsInMinute := 60000
+
+	xmlTimerConstant := SwConfig{}
+	connectionString, dialect := CheckDatabaseType()
+	db, err := gorm.Open(dialect, connectionString)
+
+	if err != nil {
+		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
+		return 60 * numberOfMillisecondsInMinute
+	}
+	defer db.Close()
+	argument := "XmlExportInMinutes"
+	db.Where("`Key` = ?", argument).Find(&xmlTimerConstant)
+	returnValue, err := strconv.Atoi(xmlTimerConstant.Value)
+	if err != nil {
+		return 60 * numberOfMillisecondsInMinute
+	}
+	return returnValue * numberOfMillisecondsInMinute
 }
 
 type TerminalInputOrder struct {
@@ -138,6 +160,19 @@ type RompaWorkplaceData struct {
 
 func (RompaWorkplaceData) TableName() string {
 	return "rompa_workplace_data"
+}
+
+type SwConfig struct {
+	OID     int    `gorm:"column:OID"`
+	SoftId  string `gorm:"column:SoftId"`
+	Key     string `gorm:"column:Key"`
+	Value   string `gorm:"column:Value"`
+	Version string `gorm:"column:Version"`
+	Note    string `gorm:"column:Note"`
+}
+
+func (SwConfig) TableName() string {
+	return "sw_config"
 }
 
 func CheckDatabase() bool {
