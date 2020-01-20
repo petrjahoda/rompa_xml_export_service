@@ -1,0 +1,4 @@
+2020-01-20 14:58:21.254   MAIN   ERR   Problem creating directory /home/data, already exists: exit status 1
+2020-01-20 14:58:21.270   MAIN   ERR   Problem mapping network directory: exit status 66
+2020-01-20 14:58:33.317   MAIN   ERR   Problem creating directory /home/data, already exists: exit status 1
+2020-01-20 14:58:33.332   MAIN   ERR   Problem mapping network directory: exit status 66

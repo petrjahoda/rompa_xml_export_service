@@ -246,9 +246,11 @@ func (workplace Workplace) ProcessMachineFails(start time.Time) {
 	}
 	latestMachineFailDateTime = workplace.GetLatestMachineFailDateTime()
 	waitTime := workplace.GetConstantFromDatabase()
-	LogInfo(workplace.Name, "Duration is over the limit: "+strconv.FormatBool(start.Sub(latestMachineFailDateTime) > time.Duration(waitTime))+" with constant in milliseconds: "+strconv.Itoa(waitTime))
-	if start.Sub(latestMachineFailDateTime) > time.Duration(waitTime) && len(openOrders) > 0 {
-		LogInfo(workplace.Name, "Number of machine fails: "+strconv.Itoa(machineFailsCount))
+	LogInfo(workplace.Name, "Duration now: "+strconv.Itoa(int(start.Sub(latestMachineFailDateTime).Milliseconds())))
+	LogInfo(workplace.Name, "Duration set: "+strconv.Itoa(waitTime))
+	LogInfo(workplace.Name, "Duration is over the limit: "+strconv.FormatBool(int(start.Sub(latestMachineFailDateTime).Milliseconds()) > waitTime))
+	if (int(start.Sub(latestMachineFailDateTime).Milliseconds()) > waitTime) && len(openOrders) > 0 {
+		LogInfo(workplace.Name, "Processing machine fails, number of machine fails: "+strconv.Itoa(machineFailsCount))
 		for _, openOrder := range openOrders {
 			if machineFailsCount > 0 {
 				productionSchedule, productId := GetOrderNameAndProductIdFor(openOrder.OrderID)

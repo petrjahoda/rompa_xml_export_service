@@ -1,0 +1,18 @@
+2020-01-20 14:58:21.095   MAIN   INF   Program version 2020.1.1.20 started
+2020-01-20 14:58:21.095   MAIN   INF   Program running
+2020-01-20 14:58:21.205   MAIN   WRN   Database zapsi2 does not exist
+2020-01-20 14:58:21.206   MAIN   INF   Creating directory data
+2020-01-20 14:58:21.254   MAIN   ERR   Problem creating directory /home/data, already exists: exit status 1
+2020-01-20 14:58:21.254   MAIN   INF   Directory /home/data created
+2020-01-20 14:58:21.254   MAIN   INF   Mapping network directory
+2020-01-20 14:58:21.270   MAIN   ERR   Problem mapping network directory: exit status 66
+2020-01-20 14:58:21.270   MAIN   INF   Sleeping for 9.825118592s
+2020-01-20 14:58:33.293   MAIN   INF   Program version 2020.1.1.20 started
+2020-01-20 14:58:33.294   MAIN   INF   Program running
+2020-01-20 14:58:33.298   MAIN   WRN   Database zapsi2 does not exist
+2020-01-20 14:58:33.298   MAIN   INF   Creating directory data
+2020-01-20 14:58:33.317   MAIN   ERR   Problem creating directory /home/data, already exists: exit status 1
+2020-01-20 14:58:33.317   MAIN   INF   Directory /home/data created
+2020-01-20 14:58:33.317   MAIN   INF   Mapping network directory
+2020-01-20 14:58:33.332   MAIN   ERR   Problem mapping network directory: exit status 66
+2020-01-20 14:58:33.332   MAIN   INF   Sleeping for 9.96201466s
