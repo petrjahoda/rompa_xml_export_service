@@ -14,7 +14,7 @@ var (
 	workplaceSync     sync.Mutex
 )
 
-const version = "2020.1.1.20"
+const version = "2020.2.1.21"
 const deleteLogsAfter = 240 * time.Hour
 const downloadInSeconds = 10
 
