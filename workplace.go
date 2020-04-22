@@ -59,7 +59,7 @@ func (workplace Workplace) ProcessTerminalBoxes() {
 				"\n\t\t\t<ComponentID>erp</ComponentID>" +
 				"\n\t\t\t<ConfirmationCode>OnError</ConfirmationCode>" +
 				"\n\t\t</Sender>" +
-				"\n\t\t<CreationDateTime>" + time.Now().Format("2006-01-02T15:04:05Z") + "</CreationDateTime>" +
+				"\n\t\t<CreationDateTime>" + time.Now().UTC().Format("2006-01-02T15:04:05Z") + "</CreationDateTime>" +
 				"\n\t\t<BODID>" + strconv.Itoa(barcode) + "</BODID>" +
 				"\n\t</ApplicationArea>" +
 				"\n\t<DataArea>" +
@@ -80,7 +80,7 @@ func (workplace Workplace) ProcessTerminalBoxes() {
 				"\n\t\t\t\t<ID>" + productName + "</ID>" +
 				"\n\t\t\t</Item>" +
 				"\n\t\t\t<Operator>" + userLogin + "</Operator>" +
-				"\n\t\t\t<ProductionDate>" + newPackage.DT.Format("2006-01-02T15:04:05Z") + "</ProductionDate>" +
+				"\n\t\t\t<ProductionDate>" + newPackage.DT.UTC().Format("2006-01-02T15:04:05Z") + "</ProductionDate>" +
 				"\n\t\t\t<Status>completed</Status>" +
 				"\n\t\t</BoxID>" +
 				"\n\t</DataArea>" +
@@ -124,7 +124,7 @@ func (workplace Workplace) ProcessTerminalFails() {
 				"\n\t\t\t<ComponentID>erp</ComponentID>" +
 				"\n\t\t\t<ConfirmationCode>OnError</ConfirmationCode>" +
 				"\n\t\t</Sender>" +
-				"\n\t\t<CreationDateTime>" + time.Now().Format("2006-01-02T15:04:05Z") + "</CreationDateTime>" +
+				"\n\t\t<CreationDateTime>" + time.Now().UTC().Format("2006-01-02T15:04:05Z") + "</CreationDateTime>" +
 				"\n\t\t<BODID>" + strconv.Itoa(terminalFail.FailID) + "</BODID>" +
 				"\n\t</ApplicationArea>" +
 				"\n\t<DataArea>" +
@@ -146,7 +146,7 @@ func (workplace Workplace) ProcessTerminalFails() {
 				"\n\t\t\t</Item>" +
 				"\n\t\t\t<ActualQuantity>" + strconv.Itoa(terminalFail.Count) + "</ActualQuantity>" +
 				"\n\t\t\t<Operator>" + userLogin + "</Operator>" +
-				"\n\t\t\t<ProductionDate>" + terminalFail.DT.Format("2006-01-02T15:04:05Z") + "</ProductionDate>" +
+				"\n\t\t\t<ProductionDate>" + terminalFail.DT.UTC().Format("2006-01-02T15:04:05Z") + "</ProductionDate>" +
 				"\n\t\t\t<Status>rejected</Status>" +
 				"\n\t\t\t<RejectReason>" + rejectionReasonCode + "</RejectReason>" +
 				"\n\t\t</BoxID>" +
@@ -199,7 +199,7 @@ func (workplace Workplace) ProcessMachineFails(start time.Time) {
 					"\n\t\t\t<ComponentID>erp</ComponentID>" +
 					"\n\t\t\t<ConfirmationCode>OnError</ConfirmationCode>" +
 					"\n\t\t</Sender>" +
-					"\n\t\t<CreationDateTime>" + start.Format("2006-01-02T15:04:05Z") + "</CreationDateTime>" +
+					"\n\t\t<CreationDateTime>" + time.Now().UTC().Format("2006-01-02T15:04:05Z") + "</CreationDateTime>" +
 					"\n\t\t<BODID>" + machineFailId + "</BODID>" +
 					"\n\t</ApplicationArea>" +
 					"\n\t<DataArea>" +
@@ -221,7 +221,7 @@ func (workplace Workplace) ProcessMachineFails(start time.Time) {
 					"\n\t\t\t</Item>" +
 					"\n\t\t\t<ActualQuantity>" + strconv.Itoa(machineFailsCount*openOrder.Cavity) + "</ActualQuantity>" +
 					"\n\t\t\t<Operator>" + userLogin + "</Operator>" +
-					"\n\t\t\t<ProductionDate>" + start.Format("2006-01-02T15:04:05Z") + "</ProductionDate>" +
+					"\n\t\t\t<ProductionDate>" + time.Now().UTC().Format("2006-01-02T15:04:05Z") + "</ProductionDate>" +
 					"\n\t\t\t<Status>rejected</Status>" +
 					"\n\t\t\t<RejectReason>" + rejectionReasonCode + "</RejectReason>" +
 					"\n\t\t</BoxID>" +
