@@ -15,12 +15,11 @@ func (workplace Workplace) CheckRompaWorkplaceData() {
 	var terminalInputFail TerminalInputFail
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return
 	}
-	defer db.Close()
 	db.Where("WorkplaceId = ?", workplace.OID).Find(&rompaWorkplaceData)
 	db.Order("OID desc").Last(&terminalInputFail)
 	db.Order("OID desc").Last(&terminalInputPackage)
@@ -315,12 +314,11 @@ func (workplace Workplace) UpdateRompaWorkplaceDataMachineFailDateTime(start tim
 	var rompaWorkplaceData RompaWorkplaceData
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return
 	}
-	defer db.Close()
 	db.Model(&rompaWorkplaceData).Where("WorkplaceId = ?", workplace.OID).Update("LatestMachineFailDateTime", start)
 }
 
@@ -328,12 +326,11 @@ func (workplace Workplace) UpdateRompaWorkplaceDataLatestPackageId(latestPackage
 	var rompaWorkplaceData RompaWorkplaceData
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return
 	}
-	defer db.Close()
 	db.Model(&rompaWorkplaceData).Where("WorkplaceId = ?", workplace.OID).Update("LatestPackageID", latestPackageId)
 }
 
@@ -341,11 +338,11 @@ func (workplace Workplace) UpdateRompaWorkplaceDataLatestTerminalFailId(latestTe
 	var rompaWorkplaceData RompaWorkplaceData
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 	}
 	if db != nil {
-		defer db.Close()
 		db.Model(&rompaWorkplaceData).Where("WorkplaceId = ?", workplace.OID).Update("LatestTerminalFailID", latestTerminalFailId)
 	}
 }
@@ -362,12 +359,11 @@ func (workplace Workplace) GetLatestTerminalFailId() int {
 	workplaceData := RompaWorkplaceData{}
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return 0
 	}
-	defer db.Close()
 	db.Where("WorkplaceID = ?", workplace.OID).Find(&workplaceData)
 	return workplaceData.LatestTerminalFailID
 }
@@ -376,12 +372,11 @@ func (workplace Workplace) GetLatestMachineFailDateTime() time.Time {
 	workplaceData := RompaWorkplaceData{}
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return time.Date(2000, 1, 1, 0, 0, 0, 0, time.Now().Location())
 	}
-	defer db.Close()
 	db.Where("WorkplaceID = ?", workplace.OID).Find(&workplaceData)
 	return workplaceData.LatestMachineFailDateTime
 }
@@ -390,12 +385,11 @@ func (workplace Workplace) CheckOrderChangeInLastTenSeconds(start time.Time) boo
 	terminalInputOrder := TerminalInputOrder{}
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return false
 	}
-	defer db.Close()
 	db.Where("DeviceID = ?", workplace.DeviceID).Order("DTS desc").Last(&terminalInputOrder)
 	LogInfo(workplace.Name, "Latest open order id: "+strconv.Itoa(terminalInputOrder.OID))
 	LogInfo(workplace.Name, terminalInputOrder.DTE.String())
@@ -413,13 +407,12 @@ func (workplace Workplace) GetTerminalFailsFrom(terminalInputFailId int) []Termi
 	var terminalFails []TerminalInputFail
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return terminalFails
 	}
-	defer db.Close()
-	db.Raw("SELECT count(*) as Count,OID, FailID, DT, UserID, DeviceID FROM `terminal_input_fail`where OID>? and DeviceID =? group by FailID,DT order by OID asc", terminalInputFailId, workplace.DeviceID).Find(&terminalFails)
+	db.Debug().Raw("SELECT count(*) as Count,OID, FailID, DT, UserID, DeviceID FROM `terminal_input_fail`where OID>? and DeviceID =? group by FailID,DT order by OID asc", terminalInputFailId, workplace.DeviceID).Find(&terminalFails)
 	return terminalFails
 
 }
@@ -428,12 +421,11 @@ func (workplace Workplace) GetNumberOfMachineFails(latestMachineFailDateTime tim
 	var count int
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return 0
 	}
-	defer db.Close()
 	db.Table("device_input_digital").Where("DevicePortID = ?", failDevicePortId).Where("DT > ?", latestMachineFailDateTime).Where("DT < ?", endTime).Where("Data =?", 1).Count(&count)
 	return count
 }
@@ -442,12 +434,11 @@ func (workplace Workplace) GetFailDevicePortId() int {
 	var workplacePort WorkplacePort
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return 0
 	}
-	defer db.Close()
 	db.Where("WorkplaceID = ?", workplace.OID).Where("Type = ?", "fail").Find(&workplacePort)
 	return workplacePort.DevicePortID
 }

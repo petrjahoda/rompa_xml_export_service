@@ -14,7 +14,7 @@ var (
 	workplaceSync     sync.Mutex
 )
 
-const version = "2020.2.1.22"
+const version = "2020.4.1.26"
 const deleteLogsAfter = 240 * time.Hour
 const downloadInSeconds = 10
 
@@ -106,13 +106,12 @@ func CheckWorkplace(workplace Workplace) bool {
 func UpdateActiveWorkplaces(reference string) {
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(reference, "Problem opening "+DatabaseName+" database: "+err.Error())
 		activeWorkplaces = nil
 		return
 	}
-	defer db.Close()
 	db.Where("WorkplaceGroupId = ?", 2).Find(&activeWorkplaces)
 }
 

@@ -36,12 +36,11 @@ func (workplace Workplace) GetConstantFromDatabase() int {
 	xmlTimerConstant := SwConfig{}
 	connectionString, dialect := CheckDatabaseType()
 	db, err := gorm.Open(dialect, connectionString)
-
+	defer db.Close()
 	if err != nil {
 		LogError(workplace.Name, "Problem opening "+DatabaseName+" database: "+err.Error())
 		return 60 * numberOfMillisecondsInMinute
 	}
-	defer db.Close()
 	argument := "XmlExportInMinutes"
 	db.Where("`Key` = ?", argument).Find(&xmlTimerConstant)
 	returnValue, err := strconv.Atoi(xmlTimerConstant.Value)
@@ -186,11 +185,11 @@ func CheckDatabase() bool {
 		dialect = "mysql"
 	}
 	db, err := gorm.Open(dialect, connectionString)
+	defer db.Close()
 	if err != nil {
 		LogWarning("MAIN", "Database zapsi2 does not exist")
 		return false
 	}
-	defer db.Close()
 	LogDebug("MAIN", "Database zapsi2 exists")
 	return true
 }
