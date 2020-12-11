@@ -14,7 +14,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.5 // indirect
 	github.com/openzipkin/zipkin-go v0.1.6 // indirect
 	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829 // indirect
-	golang.org/x/crypto v0.0.0-20201124201722-c8d3bf9c5392 // indirect
-	golang.org/x/sys v0.0.0-20201201145000-ef89a241ccb3 // indirect
+	golang.org/x/crypto v0.0.0-20201208171446-5f87f3452ae9 // indirect
+	golang.org/x/sys v0.0.0-20201211002650-1f0c578a6b29 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 )

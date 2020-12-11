@@ -48,7 +48,7 @@ func (workplace Workplace) ProcessTerminalBoxes() {
 		userLogin := GetUserLoginForPackage(userId)
 		productId := GetProductIdForPackage(orderId)
 		productName := GetProductNameForPackage(productId)
-		if deviceId == workplace.DeviceID {
+		if deviceId == workplace.DeviceID && newPackage.Count > 0 {
 			LogInfo(workplace.Name, "SAVING PACKAGE: "+newPackage.DT.String()+"-"+strconv.Itoa(barcode)+"-"+strconv.Itoa(newPackage.Count)+"-"+productName+"-"+userLogin+"-"+time.Now().String())
 			data := "<?xml version=\"1.0\"?>" +
 				"\n<ProcessBoxID>" +
